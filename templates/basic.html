@@ -1,0 +1,189 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dexter: your diagnosis assistant</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link sizes="16x16" href="{% static 'assets/img/favicon.png'%}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+
+
+  {% block head %}
+
+
+
+  {% endblock %}
+ 
+</head>
+
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex justify-content-between">
+      <div class="contact-info d-flex align-items-center">
+        <i class="bi bi-envelope"></i> <a href="mailto:contact@example.com">contact.dex24@gmail.com</a>
+        <i class="bi bi-phone"></i> +91 8521154022
+      </div>
+      <div class="d-none d-lg-flex social-links align-items-center">
+        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="{% url 'home' %}">Dexter</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="{% static 'assets/img/logo.png' %}" alt="" class="img-fluid"></a>-->
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#why-us">About</a></li>
+         
+        
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+
+          {% if user.is_authenticated %}
+                      
+          {% if user.patient %}
+
+          <li class="nav-link scrollto ">
+          <li class="nav-link active" href="{% url 'patient_ui' %}">Hello, {{user.patient.name}}</li>
+          </li>
+          <li class="nav-link scrollto">
+              <a class="nav-link" href="{% url 'patient_ui' %}">Profile</a>
+              </li>
+
+              
+              {% endif %}
+                      
+              {% if user.doctor  %}
+
+              <li class="nav-link scrollto">
+                <li class="nav-link active" href="{% url 'doctor_ui' %}" >Hello, Dr. {{user.doctor.name}}</li>
+                </li>
+                <li class="nav-link scrollto">
+                    <a class="nav-link" href="{% url 'doctor_ui' %}">Profile</a>
+                    </li>
+
+
+              {% endif %}
+              {% if user.is_superuser  %}
+      
+              <li class="nav-link scrollto">
+                <li class="nav-link" href="{% url 'admin_ui' %}" >Admin: {{user.username}}</li>
+                </li>
+                <li class="nav-link scrollto">
+                    <a class="nav-link" href="{% url 'admin_ui' %}">Profile</a>
+                    </li>
+
+
+              {% endif %}
+              <li class="nav-link scrollto">
+                <button class="nav-link scrollto" data-toggle="nav-link scrollto" data-target="#logout-modal" style="color: rgb(247, 190, 188);">Log out</button>
+                                  
+                                </li>
+                
+                
+                
+                
+                                <!-- Small modal -->
+                
+                <div class="nav-link scrollto" id="logout-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="nav-link scrollto">
+                    <div class="nav-link scrollto">
+                      <div class="nav-link scrollto"><h4>Logout <i class="fa fa-lock"></i></h4></div>
+                      <div class="nav-link scrollto"><i class="fa fa-question-circle"></i><span style="color: rgb(42, 187, 6);">{{user.patient.name}}</span>, Are you sure you want to log-off?</div>
+                      <div class="nav-link scrollto"><a href="{% url 'logout' %}" class="btn btn-primary btn-block">Logout</a></div>
+                    </div>
+                  </div>
+                </div>
+                                
+                                {% else %}
+                                <li class="nav-link scrollto">
+
+                                  <li class="dropdown"><a href="#"><span>Signup</span> <i class="bi bi-chevron-down"></i></a>
+                                    <ul>
+                                      <li><a href="{% url 'signup_doctor' %}">I am doctor</a></li>
+                                      <li><a href="{% url 'signup_patient' %}">I am a patient</a></li>
+                                    
+                              
+                                    </ul>
+                                  </li>
+                                  <li class="dropdown"><a href="#"><span>Login</span> <i class="bi bi-chevron-down"></i></a>
+                                    <ul>
+                                      <li><a href="{% url 'sign_in_admin' %}">Admin</a></li>
+                                      <li><a href="{% url 'sign_in_doctor' %}">Doctor </a></li>
+                                      <li><a href="{% url 'sign_in_patient' %}">Patient</a></li>
+                                    
+                              
+                                    </ul>
+                                  </li>
+                              </li>
+                          
+                              
+                              {% endif %}
+              
+                                
+         
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+      <a href="#Diagnosis" class="appointment-btn scrollto"><span class="d-none d-md-inline">Go for</span> Diagnosis</a>
+
+    </div>
+  </header><!-- End Header -->
+  
+
+
+
+  {% block body %}
+
+  {% endblock %}
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/purecounter/purecounter.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>
